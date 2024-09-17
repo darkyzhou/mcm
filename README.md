@@ -4,6 +4,8 @@ A command-line tool that generates well-formed commit messages based on your sta
 
 To use MCM, you need `git` installed and access to an LLM service.
 
+![Demo](demo.gif)
+
 ## Key Features
 
 - 🤖 AI-powered commit message generation based on staged changes
