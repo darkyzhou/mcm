@@ -72,13 +72,28 @@ const LLMCommitMessageResponse = struct {
     }
 };
 
+fn populate_user_message(alloc: std.mem.Allocator, diff: []const u8, hint: ?[]const u8) ![]const u8 {
+    if (hint == null) {
+        return diff;
+    }
+
+    var message = std.ArrayList(u8).init(alloc);
+    errdefer message.deinit();
+
+    try message.appendSlice("----- Following are the changes -----");
+    try message.appendSlice(diff);
+    try message.appendSlice("----- Following is the hint, pay attention to its requirement ------");
+    try message.appendSlice(hint.?);
+
+    return try message.toOwnedSlice();
+}
+
 pub fn requestLLM(
     parent_alloc: std.mem.Allocator,
     conf: *const config.AppConfig,
     diff: []const u8,
     hint: ?[]const u8,
 ) !std.json.Parsed(LLMCommitMessageResponse) {
-    _ = hint;
     var arena = std.heap.ArenaAllocator.init(parent_alloc);
     defer arena.deinit();
     const alloc = arena.allocator();
@@ -87,8 +102,14 @@ pub fn requestLLM(
     defer client.deinit();
 
     const messages = [_]providers.OpenAIChatMessage{
-        providers.OpenAIChatMessage{ .role = providers.openai_chat_message_role_system, .content = conf.system_prompt },
-        providers.OpenAIChatMessage{ .role = providers.openai_chat_message_role_user, .content = diff },
+        providers.OpenAIChatMessage{
+            .role = providers.openai_chat_message_role_system,
+            .content = conf.system_prompt,
+        },
+        providers.OpenAIChatMessage{
+            .role = providers.openai_chat_message_role_user,
+            .content = try populate_user_message(alloc, diff, hint),
+        },
     };
 
     const parsed = std.json.parseFromSlice(std.json.Value, alloc, llm_json_schema, .{}) catch unreachable;
