@@ -48,6 +48,8 @@ $ mcm --hint "the scope should be dns/providers"
 
 - [ ] Support more LLM providers like Anthropic, Cloudflare, etc.
 - [ ] Support more languages besides English.
+- [ ] Improve default system prompt for LLM.
+- [ ] Publish the package to various package managers like Homebrew, Nixpkgs, etc.
 
 ## Configuration
 
