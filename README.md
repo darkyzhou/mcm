@@ -19,6 +19,7 @@ To use MCM, you need `git` installed and access to an LLM service.
 1. Create a configuration file at `$HOME/.config/mcm/config.toml` with your API key:
 
 ```toml
+# Specify your OpenAI API key here. For more configuration options, see the "Configuration" section below.
 api_key = "your_api_key"
 ```
 
