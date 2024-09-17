@@ -9,15 +9,7 @@ jobs:
   build:
     strategy:
       matrix:
-        target:
-          [
-            aarch64-windows,
-            x86_64-windows,
-            aarch64-macos,
-            x86_64-macos,
-            aarch64-linux,
-            x86_64-linux,
-          ]
+        target: [aarch64-macos, x86_64-macos, aarch64-linux, x86_64-linux]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
