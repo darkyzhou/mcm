@@ -53,6 +53,7 @@ pub fn parseCliConfig(alloc: std.mem.Allocator) !utils.Result(CliConfig, []const
             config.hint = args.next() orelse {
                 return .{ .Err = "--hint requires a value" };
             };
+            continue;
         }
 
         return .{ .Err = "Unknown argument received" };
@@ -75,7 +76,8 @@ const default_system_prompt =
     \\
     \\Notes:
     \\- `scope`, `body`, and `footer` are optional.
-    \\- Use Markdown formatting when appropriate.
+    \\- Use Markdown formats when appropriate.
+    \\- Never mention any issues or discussions.
     \\
     \\Example output:
     \\{
