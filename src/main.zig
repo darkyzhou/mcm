@@ -10,8 +10,6 @@ const editor = @import("editor.zig");
 
 const stdout = std.io.getStdOut();
 
-const commit_message_max_bytes = 4 * 1024; // 4 KiB
-
 pub fn main() !u8 {
     var gpa = std.heap.GeneralPurposeAllocator(.{}){};
     var arena = std.heap.ArenaAllocator.init(gpa.allocator());
@@ -51,7 +49,7 @@ pub fn main() !u8 {
             return 1;
         },
         .NotRepository => {
-            try utils.err("Not a  git repository. Please run this command from within a git repository", .{});
+            try utils.err("Not a git repository. Please run this command from within a git repository", .{});
             return 1;
         },
         .IsDirty => {
