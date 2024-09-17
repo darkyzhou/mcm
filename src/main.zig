@@ -32,7 +32,7 @@ pub fn main() !u8 {
     }
 
     if (cli_config.version) {
-        try stdout.writeAll("mcm version 0.0.1");
+        try stdout.writeAll("mcm version 0.0.2");
         // TODO
         return 0;
     }
