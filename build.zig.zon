@@ -1,0 +1,25 @@
+.{
+    .name = "mcm",
+    .version = "0.0.1",
+    .dependencies = .{
+        .@"zig-toml" = .{
+            .url = "https://github.com/sam701/zig-toml/archive/67e35c75c5d11caf398bccae39d14d7187d1a952.zip",
+            .hash = "1220ced9b2f6943f688ce1e20a40f143d83c4182320e4b9d30e470b010d44b356f0a",
+        },
+        .mibu = .{
+            .url = "https://github.com/xyaman/mibu/archive/refs/heads/main.zip",
+            .hash = "12202556266b6db35cff093d9e0a6c012810758a282b285068309dd9662c67fce84e",
+        },
+        .tmpfile = .{
+            .url = "https://github.com/dgv/tmpfile.zig/archive/refs/heads/master.zip",
+            .hash = "12203f2d6919621db9c49f7053dd6a84beaf6cf0f8169ef82ec5ca617b8929731d32",
+        },
+    },
+    .paths = .{
+        "build.zig",
+        "build.zig.zon",
+        "src",
+        "LICENSE",
+        "README.md",
+    },
+}
