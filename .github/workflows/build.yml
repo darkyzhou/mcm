@@ -1,0 +1,43 @@
+name: build
+
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        target:
+          [
+            aarch64-windows,
+            x86_64-windows,
+            aarch64-macos,
+            x86_64-macos,
+            aarch64-linux,
+            x86_64-linux,
+          ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Zig
+        uses: mlugg/setup-zig@v1
+        with:
+          version: 0.13.0
+
+      - name: Build project
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          zig build -Doptimize=ReleaseSmall -Dtarget=${{ matrix.target }}
+          mv zig-out/bin/mcm zig-out/bin/mcm-${{ matrix.target }}-${{ github.ref_name }}
+
+      - name: Upload to release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: zig-out/bin/mcm-${{ matrix.target }}-${{ github.ref_name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
